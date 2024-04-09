@@ -4,8 +4,7 @@ struct Data {
 
 struct Ingredient {
     data: Data,
-    size: u32,
-    depth: u32,
+    depth: usize,
 }
 
 struct Soup {
@@ -13,7 +12,13 @@ struct Soup {
 }
 
 impl Soup {
-    fn count(&self) -> u32 {
-        self.count()
+    fn count(&self) -> usize {
+        self.data.len()
+    }
+}
+
+impl Ingredient {
+    fn size(&self) -> usize {
+        self.data.value.len()
     }
 }
