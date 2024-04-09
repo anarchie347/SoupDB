@@ -1,5 +1,5 @@
 use core::fmt;
-use std::{collections::HashMap, fmt::{Debug, Error, Formatter}, hash::Hash};
+use std::{collections::HashMap, fmt::{Debug, Error, Formatter}, hash::Hash, collections::hash_map::Keys};
 
 ///An implementaition of a multiset
 pub struct Pile<T>
@@ -33,6 +33,13 @@ where
         }
     }
 
+    pub fn distinct(&self) -> Keys<'_, T, usize> {
+        self.hash_table.keys()
+    }
+
+    pub fn len(&self) -> usize {
+        self.hash_table.values().sum()
+    }
 }
 
 impl<T> Debug for Pile<T>

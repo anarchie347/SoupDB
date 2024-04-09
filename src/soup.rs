@@ -8,7 +8,7 @@ struct Ingredient {
 }
 
 struct Soup {
-    data: Vec<Ingredient>,
+    depths: Vec<Ingredient>,
 }
 
 impl Soup {
