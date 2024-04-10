@@ -4,16 +4,20 @@ struct Data {
 
 struct Ingredient {
     data: Data,
-    depth: usize,
 }
 
 struct Soup {
-    depths: Vec<Ingredient>,
+    depths: pile::Pile<Ingredient>,
 }
 
 impl Soup {
     fn count(&self) -> usize {
-        self.data.len()
+        self
+        .depths
+        .iter()
+        .map(|ingredient| {
+
+        })
     }
 }
 
