@@ -1,5 +1,6 @@
 use core::fmt;
-use std::{collections::HashMap, fmt::{Debug, Error, Formatter}, hash::Hash, collections::hash_map::Keys};
+use std::{collections::{hash_map::Keys, HashMap, HashSet}, fmt::{Debug, Error, Formatter}, hash::Hash, os::windows::thread, result};
+use rand::{distributions::{self, WeightedError}, prelude::*};
 
 ///An implementaition of a multiset
 pub struct Pile<T>
@@ -39,6 +40,22 @@ where
 
     pub fn len(&self) -> usize {
         self.hash_table.values().sum()
+    }
+
+    pub fn get_random(&self, amount: usize) -> Result<Vec<&T>, WeightedError> {
+        let kvps = self.hash_table.iter().collect::<Vec<(&T, &usize)>>();
+
+        let weights = self.hash_table.iter().map(|(k,v)| *v).collect::<Vec<usize>>();
+
+        let mut gen = rand::thread_rng();
+        let distribuion = rand::distributions::WeightedIndex::new(weights)?;
+
+        let mut indexes = HashSet::<usize>::new(); //used to ensure different items are chosen
+        while indexes.len() < amount {
+            indexes.insert(distribuion.sample(&mut gen));
+        }
+
+        Ok(indexes.iter().map(|i| kvps[*i].0).collect())
     }
 }
 
