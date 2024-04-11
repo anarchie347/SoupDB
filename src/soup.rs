@@ -1,28 +1,43 @@
-struct Data {
-    value: String,
-}
+use std::hash::{Hash, Hasher};
+
+use crate::Pile;
 
 struct Ingredient {
-    data: Data,
+    data: String,
+}
+impl Ingredient {
+    pub fn size(&self) -> usize {
+        self.data.len()
+    }
+}
+
+impl PartialEq for Ingredient {
+    fn eq(&self, other: &Self) -> bool {
+        self.data == other.data
+    }
+}
+impl Eq for Ingredient {}
+impl Hash for Ingredient {
+    fn hash<H : Hasher>(&self, state: &mut H) {
+        self.data.hash(state);
+    }
 }
 
 struct Soup {
-    depths: pile::Pile<Ingredient>,
+    depths: Vec<Pile<Ingredient>>,
 }
 
 impl Soup {
-    fn count(&self) -> usize {
+    pub fn count(&self) -> usize {
         self
         .depths
         .iter()
-        .map(|ingredient| {
-
+        .map(|pile| {
+            pile.len()
         })
+        .sum()
     }
 }
 
-impl Ingredient {
-    fn size(&self) -> usize {
-        self.data.value.len()
-    }
-}
+
+
