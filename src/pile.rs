@@ -2,6 +2,8 @@ use core::fmt;
 use std::{collections::{hash_map::Keys, HashMap, HashSet}, fmt::{Debug, Error, Formatter}, hash::Hash, os::windows::thread, result};
 use rand::{distributions::{self, WeightedError}, prelude::*};
 
+// this is all old unused code
+
 ///An implementaition of a multiset
 pub struct Pile<T>
 {
