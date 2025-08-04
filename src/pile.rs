@@ -42,13 +42,20 @@ where
         self.hash_table.values().sum()
     }
 
-    pub fn get_random(&self, amount: usize) -> Result<Vec<&T>, WeightedError> {
+    pub fn get_random(&self, amount: usize) -> Result<Vec<&T>, Error> {
         let kvps = self.hash_table.iter().collect::<Vec<(&T, &usize)>>();
+
+        if kvps.len() < amount {
+            return  Err(fmt::Error::());
+        }
 
         let weights = self.hash_table.iter().map(|(k,v)| *v).collect::<Vec<usize>>();
 
         let mut gen = rand::thread_rng();
-        let distribuion = rand::distributions::WeightedIndex::new(weights)?;
+        let distribution = match rand::distributions::WeightedIndex::new(weights) {
+            Ok(res) => res,
+            Err(error) => return 
+        }
 
         let mut indexes = HashSet::<usize>::new(); //used to ensure different items are chosen
         while indexes.len() < amount {

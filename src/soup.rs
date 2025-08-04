@@ -37,6 +37,10 @@ impl Soup {
         })
         .sum()
     }
+
+    pub fn natural_mix(&self, intensity: u32) {
+        
+    }
 }
 
 
