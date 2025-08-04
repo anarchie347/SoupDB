@@ -2,7 +2,7 @@ use std::hash::{Hash, Hasher};
 
 use crate::Pile;
 
-struct Ingredient {
+pub struct Ingredient {
     data: String,
 }
 impl Ingredient {
